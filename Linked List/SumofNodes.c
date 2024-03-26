@@ -88,3 +88,16 @@ int main() {
 
     return 0;
 }
+
+// Output:  
+// 1. Insert
+// 2. Display
+// 3. Sum of Linked List
+// 4. Exit
+// Enter your choice: 1
+//      
+// Enter data to insert: 5
+// 1. Insert
+// 2. Display
+// 3. Sum of Linked List
+// 4. Exit

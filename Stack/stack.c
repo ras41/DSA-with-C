@@ -103,3 +103,20 @@ int main()
 
     return 0;
 }
+// Output: Enter the operation to perform on the Stack :
+// 1.Push
+// 2.Pop
+// 3.Peek
+// 4.Display
+// 5.Exit
+// 1
+// Enter the element to push in the stack : 5
+// Enter the operation to perform on the Stack :
+// 1.Push
+// 2.Pop
+// 3.Peek
+// 4.Display
+// 5.Exit
+// 4
+// 5
+// Enter the operation to perform on the Stack :

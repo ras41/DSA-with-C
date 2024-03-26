@@ -41,3 +41,7 @@ int main() {
   head = one;
   printLinkedlist(head);
 }
+
+// Output: 1 2 3  
+
+

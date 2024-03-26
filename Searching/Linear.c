@@ -21,3 +21,4 @@ int main(void)
 	return 0; 
 }
 
+// Output: Element is present at index 3

@@ -28,3 +28,4 @@ int main(void)
     printf("Element is found at index %d", result);
   return 0;
 }
+// Output: Element is found at index 1
