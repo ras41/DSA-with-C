@@ -1,51 +1,97 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-void selectionSort(int arr[], int size);
-void swap(int *a, int *b);
+struct node {
+  int key;
+  struct node *left, *right;
+};
 
-void selectionSort(int arr[], int size)
-{
-    int i, j;
-    for (i = 0 ;  i < size;i++)
-    {
-        for (j = i ; j < size; j++)
-        {
-            if (arr[i] > arr[j])
-                swap(&arr[i], &arr[j]);
-        }
+struct node *newNode(int item) {
+  struct node *temp = (struct node *)malloc(sizeof(struct node));
+  temp->key = item;
+  temp->left = temp->right = NULL;
+  return temp;
+}
+
+void inorder(struct node *root) {
+  if (root != NULL) {
+    inorder(root->left);
+
+    printf("%d -> ", root->key);
+
+    inorder(root->right);
+  }
+}
+
+struct node *insert(struct node *node, int key) {
+  if (node == NULL) return newNode(key);
+
+  if (key < node->key)
+    node->left = insert(node->left, key);
+  else
+    node->right = insert(node->right, key);
+
+  return node;
+}
+
+struct node *minValueNode(struct node *node) {
+  struct node *current = node;
+
+  while (current && current->left != NULL)
+    current = current->left;
+
+  return current;
+}
+
+struct node *deleteNode(struct node *root, int key) {
+  if (root == NULL) return root;
+
+  if (key < root->key)
+    root->left = deleteNode(root->left, key);
+  else if (key > root->key)
+    root->right = deleteNode(root->right, key);
+
+  else {
+    if (root->left == NULL) {
+      struct node *temp = root->right;
+      free(root);
+      return temp;
+    } else if (root->right == NULL) {
+      struct node *temp = root->left;
+      free(root);
+      return temp;
     }
-}
- 
-void swap(int *a, int *b)
-{
-    int temp;
-    temp = *a;
-    *a = *b;
-    *b = temp;
-}
- 
-int main()
-{
-    int array[10], i, size;
-    printf("How many numbers you want to sort:  ");
-    scanf("%d", &size);
-    printf("\nEnter %d numbers\t", size);
-    printf("\n");
-    for (i = 0; i < size; i++)
-        scanf("%d", &array[i]);
-    selectionSort(array, size);
-    printf("\nSorted array is ");
-    for (i = 0; i < size;i++)
-        printf(" %d ", array[i]);
-    return 0;
+
+    struct node *temp = minValueNode(root->right);
+
+    root->key = temp->key;
+
+    root->right = deleteNode(root->right, temp->key);
+  }
+  return root;
 }
 
-// Output: How many numbers you want to sort:  5
-//       Enter 5 numbers
-//       5  4  3  2  1  
-//       Sorted array is  1  2  3  4  5
+int main() {
+  struct node *root = NULL;
+  root = insert(root, 8);
+  root = insert(root, 3);
+  root = insert(root, 1);
+  root = insert(root, 6);
+  root = insert(root, 7);
+  root = insert(root, 10);
+  root = insert(root, 14);
+  root = insert(root, 4);
 
+  printf("Inorder traversal: ");
+  inorder(root);
 
+  printf("\nAfter deleting 10\n");
+  root = deleteNode(root, 10);
+  printf("Inorder traversal: ");
+  inorder(root);
+}
 
-
-
+//Output -
+//Inorder traversal: 1 -> 3 -> 4 -> 6 -> 7 -> 8 -> 10 -> 14 -> 
+// After deleting 10
+// Inorder traversal: 1 -> 3 -> 4 -> 6 -> 7 -> 8 -> 14 -> 
